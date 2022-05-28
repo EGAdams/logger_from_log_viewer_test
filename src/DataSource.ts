@@ -1,7 +1,7 @@
 /*
  *  DataSource class
  */
-import { ApiArgs } from "./ApiArgs";
+import { ApiArgs } from "./IApiArgs";
 import jQuery from "jquery";
 export default class DataSource {
 

@@ -8,7 +8,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "log-object-processor": "^1.0.5",
+    "log-object-processor": "^1.0.16",
     "@egadams/vue3-plugin": "0.0.3",
     "vue": "^3.2.25"
   },

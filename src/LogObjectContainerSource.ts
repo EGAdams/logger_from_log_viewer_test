@@ -23,11 +23,10 @@ export default class LogObjectContainerSource {
         this.dataSource.runQuery( args );
     }
 
-    consumeData( _event, result ) {
+    consumeData( _event: any, result: { data: string[][]; } ) {
         console.table( result.data[ 0 ] );
         let object_data = JSON.parse( result.data[ 0 ][ 0 ] );
         let logObjects = object_data.logObjects;
-        this.LogObjectProcessor.updateQue( logObjects );
+        this.LogObjectProcessor.updateQue();
     }
-
 }

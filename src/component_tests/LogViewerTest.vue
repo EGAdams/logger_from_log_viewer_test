@@ -10,9 +10,8 @@
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
 import { LogViewer } from "@egadams/vue3-plugin";
-import { LogObjectProcessor /* @vite-ignore */ } from 'log-object-processor';
-import { LogObjectContainer /* @vite-ignore */ } from 'log-object-processor';
-import LogObjectContainerSource from '../LogObjectContainerSource';
+import { LogObjectContainerSource } from 'log-object-processor';
+import jQuery from 'jquery';
 export default defineComponent({
     name: "LogViewerTest",
     components: {
@@ -20,10 +19,9 @@ export default defineComponent({
     },
     data() {
         return {
+            log_count: 0,
             test_object_name: "tester_1",
-            logObjectContainer:  new LogObjectContainer(),
-            logObjectProcessor: new LogObjectProcessor( this.logObjectContainer ),
-            logObjectContainerSource: new LogObjectContainerSource( this.logObjectProcessor ),
+            logObjectContainerSource: new LogObjectContainerSource(),
             logs: [{
                     id: "1",
                     timestamp: 100,
@@ -44,10 +42,16 @@ export default defineComponent({
     },
     methods: {
         startTest() {
-            setInterval( function(){
+            setInterval( () =>{
                 this.logObjectContainerSource.refresh( "MessageManager_1523" );
-                this.logObjectProcessor.processLogObjects();
-            }.bind( this ), 1000 );
+                this.logs = this.logObjectContainerSource.logObjectProcessor.getWrittenLogs();
+                if ( this.log_count != this.logs.length ) {
+                    jQuery( "#tester_1_log_viewer" ).animate(
+                            { scrollTop: jQuery( "#tester_1_log_viewer" ).prop( "scrollHeight" ) * 2 },
+                            500 );
+                    this.log_count = this.logs.length;
+                }
+            }, 1000 );
         },
     },
 });
